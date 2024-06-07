@@ -47,13 +47,12 @@ const Footer = () => {
               }`}
             >
               {socials.map((social, index) => (
-                <Link href={social.url} target="_blank">
+                <Link href={social.url} target="_blank" key={index}>
                   <Image
                     src={social.image}
                     width={20}
                     height={20}
                     alt={social.name}
-                    key={index}
                   />
                 </Link>
               ))}
