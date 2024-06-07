@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/input-otp";
 import PasswordField from "@/src/components/PasswordField";
 
-const resetPasswordPage = () => {
+const ResetPasswordPage = () => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -320,4 +320,4 @@ const resetPasswordPage = () => {
   );
 };
 
-export default resetPasswordPage;
+export default ResetPasswordPage;
