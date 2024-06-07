@@ -36,10 +36,11 @@ const MenuHome = ({ theme }: { theme: string }) => {
             Discover a world of flavors with our carefully curated menu,
             designed to delight your taste buds. Each dish is crafted with the
             freshest ingredients, blending traditional recipes with modern
-            twists to create an unforgettable dining experience. Whether you're
-            craving classic favorites or adventurous new tastes, our culinary
-            offerings promise to satisfy every palate. Join us and embark on a
-            gastronomic journey that celebrates the art of fine dining.
+            twists to create an unforgettable dining experience. Whether
+            you&apos;re craving classic favorites or adventurous new tastes, our
+            culinary offerings promise to satisfy every palate. Join us and
+            embark on a gastronomic journey that celebrates the art of fine
+            dining.
           </p>
         </div>
 
@@ -96,10 +97,10 @@ const MenuHome = ({ theme }: { theme: string }) => {
             Signature Menu
           </span>
           <p className="w-[50vw] md:w-[40vw] text-xs md:text-lg">
-            Indulge in our Chef's Specials, where culinary artistry meets the
-            finest ingredients. Each dish is a masterpiece, crafted to
+            Indulge in our Chef&apos;s Specials, where culinary artistry meets
+            the finest ingredients. Each dish is a masterpiece, crafted to
             perfection and designed to tantalize your taste buds. Experience the
-            essence of our kitchen's creativity and passion in every bite.
+            essence of our kitchen&apos;s creativity and passion in every bite.
           </p>
           <div className="w-full flex flex-col items-start sm:hidden">
             <div className="min-w-[50%] flex-center flex-col">

@@ -22,9 +22,9 @@ const Outlets = ({ theme }: { theme: string }) => {
         <p className="text-slate-400">Find your perfect dining spot.</p>
         <p className="md:w-[60vw] lg:w-[50vw] xl:w-[40vw]">
           Explore our locations and experience the unique ambiance of each of
-          our dining spots. Whether you're looking for a cozy corner to enjoy a
-          quiet meal or a lively atmosphere to celebrate with friends and
-          family, our various branches offer something special for everyone.
+          our dining spots. Whether you&apos;re looking for a cozy corner to
+          enjoy a quiet meal or a lively atmosphere to celebrate with friends
+          and family, our various branches offer something special for everyone.
           Visit us and discover the delicious flavors and exceptional service
           that make our restaurants a favorite destination. Find a location near
           you and join us for an unforgettable dining experience.

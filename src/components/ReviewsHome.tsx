@@ -35,8 +35,8 @@ const ReviewsHome = ({ theme }: { theme: string }) => {
           Discover the stories behind our flavors.
         </p>
         <p className="md:w-[60vw] lg:w-[50vw] xl:w-[40vw]">
-          Our guests' experiences are at the heart of what we do. From the first
-          bite to the final course, their words reflect the passion and
+          Our guest&apos;s experiences are at the heart of what we do. From the
+          first bite to the final course, their words reflect the passion and
           dedication we pour into every dish. Read their testimonials and see
           why our culinary creations leave a lasting impression.
         </p>
