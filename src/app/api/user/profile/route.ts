@@ -201,13 +201,24 @@ export async function POST(request: NextRequest) {
     user.avatar = newAvatar;
     await user.save();
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         message: "Profile photo updated successfully",
         avatar: newAvatar,
       },
       { status: 200 }
     );
+
+    const tokenData = {
+      username: user.username,
+      email: user.email,
+      avatar: user.avatar || "",
+    };
+
+    const token = await jwt.sign(tokenData, process.env.JWT_SECRET!);
+
+    response.cookies.set("token", token);
+    return response;
   } catch (error: any) {
     return NextResponse.json(
       {
