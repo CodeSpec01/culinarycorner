@@ -325,12 +325,12 @@ const Navbar = () => {
                   Taste of Perfection
                 </SheetDescription>
               </SheetHeader>
-              <Accordion type="single" collapsible>
+              <Accordion type="single" collapsible className="w-full" >
                 <AccordionItem value="profile">
-                  <AccordionTrigger>
+                  <AccordionTrigger className="flex justify-around w-full">
                     <div
-                      className={`flex-center gap-4 w-full ${
-                        isLoggedIn ? "mr-5" : ""
+                      className={`flex-center gap-4 w-full flex-wrap ${
+                        !isLoggedIn ? "mr-5" : ""
                       }`}
                     >
                       <Image

@@ -207,7 +207,7 @@ const ProfilePage = () => {
                 theme === "dark" ? "bg-[#0000003c]" : "bg-[#ffffff3a]"
               }`}
             >
-              <h1 className="font-extrabold text-lg sm:text-4xl lg:text-6xl">
+              <h1 className="font-extrabold text-4xl lg:text-6xl">
                 User Profile
               </h1>
             </div>
