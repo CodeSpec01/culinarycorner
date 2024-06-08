@@ -148,7 +148,7 @@ export default function LoginPage() {
     setLoading(false);
     setSuccessMsg(resJson.message + "-redirecting to home page....");
     setTimeout(() => {
-      router.push("/");
+      router.push("/?q=login");
     }, 2000);
   };
 

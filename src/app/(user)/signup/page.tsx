@@ -145,7 +145,7 @@ export default function SignupPage() {
     setLoading(false);
     setSuccessMsg(resJson.message + "-redirecting to home page....");
     setTimeout(() => {
-      router.push('/');
+      router.push('/?q=signup');
     }, 2000);
   };
 

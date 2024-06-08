@@ -15,6 +15,12 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+
+    if (window.location.search.includes("?")) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      window.location.reload();
+    }
+
     setMounted(true);
   }, []);
 

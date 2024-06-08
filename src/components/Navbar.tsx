@@ -58,8 +58,8 @@ const Navbar = () => {
   const [mounted, setMounted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [userData, setUserData] = useState({
-    username: "",
-    email: "",
+    username: "Loading...",
+    email: "loading...",
     avatar: "",
   });
 
@@ -74,15 +74,12 @@ const Navbar = () => {
         return;
       }
 
-      console.log("here");
-
       const data = await res.json();
       setUserData({
         username: data.data.data.username,
         email: data.data.data.email,
         avatar: data.data.data.avatar,
       });
-      console.log(data.data.data);
       setIsLoggedIn(true);
     };
     fetchData();
@@ -266,8 +263,8 @@ const Navbar = () => {
                         className="flex-center gap-3 cursor-pointer p-2 text-lg"
                         onClick={async () => {
                           toast({
-                            title: "Logging out....."
-                          })
+                            title: "Logging out.....",
+                          });
                           const response = await fetch("/api/user/logout", {
                             method: "GET",
                           });
@@ -275,8 +272,14 @@ const Navbar = () => {
                             toast({ title: "Something went wrong" });
                           }
 
+                          setUserData({
+                            username: "",
+                            email: "",
+                            avatar: "",
+                          });
+
+                          setIsLoggedIn(false);
                           toast({ title: "Logout Successfully" });
-                          router.refresh();
                         }}
                       >
                         <LogOut />
@@ -331,7 +334,7 @@ const Navbar = () => {
                   Taste of Perfection
                 </SheetDescription>
               </SheetHeader>
-              <Accordion type="single" collapsible className="w-full" >
+              <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="profile">
                   <AccordionTrigger className="flex justify-around w-full">
                     <div
@@ -380,8 +383,8 @@ const Navbar = () => {
                           className="flex items-center justify-start gap-3 cursor-pointer pt-2"
                           onClick={async () => {
                             toast({
-                              title: "Logging out....."
-                            })
+                              title: "Logging out.....",
+                            });
                             const response = await fetch("/api/user/logout", {
                               method: "GET",
                             });
@@ -395,8 +398,8 @@ const Navbar = () => {
                               avatar: "",
                             });
 
+                            setIsLoggedIn(false);
                             toast({ title: "Logout Successfully" });
-                            router.refresh();
                           }}
                         >
                           <LogOut />

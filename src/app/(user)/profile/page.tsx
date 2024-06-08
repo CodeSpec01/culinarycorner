@@ -29,6 +29,7 @@ import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
   const { theme } = useTheme();
+  const router = useRouter();
   const [user, setUser] = useState({
     username: "loading.....",
     fullName: "loading.....",
@@ -49,6 +50,15 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (window.location.search.includes("?")) {
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+        window.location.reload();
+      }
+
       const res = await fetch("/api/user/profile");
       const data = await res.json();
 
@@ -56,7 +66,7 @@ const ProfilePage = () => {
         setErrorMsg(data.message);
         return;
       }
-      
+
       setUser({
         username: data.data.username,
         fullName: data.data.fullName,
@@ -74,9 +84,10 @@ const ProfilePage = () => {
         reservation: data.data.reservation,
       });
     };
+
     fetchData();
     setMounted(true);
-  }, []);
+  }, [window.location.search]);
 
   const saveData = async (activeTabProp?: string, avatar?: File) => {
     setLoading(true);
@@ -128,7 +139,8 @@ const ProfilePage = () => {
         setErrorMsg(data.message);
       }
 
-      setSuccessMsg(data.message + "-");
+      setSuccessMsg(data.message + "-Refreshing information...");
+      router.push(`/profile?q=${activeTabFunc}`);
       setLoading(false);
       setUser(editedUser);
       setTimeout(() => {
@@ -137,7 +149,6 @@ const ProfilePage = () => {
     }
 
     if (activeTabFunc === "avatar") {
-
       if (!avatar) {
         setLoading(false);
         setErrorMsg("Please select a file");
@@ -161,8 +172,6 @@ const ProfilePage = () => {
         setErrorMsg(data.message);
       }
 
-      setSuccessMsg(data.message + "-");
-      setLoading(false);
       setUser((prev) => ({
         ...prev,
         avatar: data.avatar,
@@ -171,6 +180,9 @@ const ProfilePage = () => {
         ...prev,
         avatar: data.avatar,
       }));
+      setSuccessMsg(data.message + "-Refreshing information...");
+      router.push(`/profile?q=${activeTabFunc}`);
+      setLoading(false);
       setTimeout(() => {
         setSuccessMsg("");
       }, 5000);

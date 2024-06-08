@@ -160,7 +160,7 @@ const ResetPasswordPage = () => {
     setSuccessMsg(resJson.message + "-redirecting to Home Page");
     setButtonDisabled(true);
     setTimeout(() => {
-      router.push("/");
+      router.push("/?q=resetPassword");
     }, 2000);
   };
 
