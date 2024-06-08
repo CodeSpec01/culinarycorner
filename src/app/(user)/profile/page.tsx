@@ -5,7 +5,7 @@ import { CircleArrowDown, EditIcon, SaveAllIcon, Undo2 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -47,17 +47,21 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [newWindow, setNewWindow] = useState<Window & typeof globalThis>();
 
   useEffect(() => {
+
+    setNewWindow(window)
+    
+    if (window.location.search.includes("?")) {
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+      window.location.reload();
+    }
     const fetchData = async () => {
-      if (window.location.search.includes("?")) {
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-        window.location.reload();
-      }
 
       const res = await fetch("/api/user/profile");
       const data = await res.json();
@@ -87,7 +91,14 @@ const ProfilePage = () => {
 
     fetchData();
     setMounted(true);
-  }, [window.location.search]);
+  }, []);
+
+  useEffect(() => { 
+    if (window.location.search.includes("?")) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      window.location.reload();
+    }
+  },[newWindow?.location.search])
 
   const saveData = async (activeTabProp?: string, avatar?: File) => {
     setLoading(true);
