@@ -13,7 +13,6 @@ import {
   Home,
   KeyRound,
   Link2Icon,
-  LogIn,
   LogOut,
   Menu,
   MenuSquare,
@@ -73,7 +72,7 @@ const Navbar = () => {
         return;
       }
 
-      console.log("here")
+      console.log("here");
 
       const data = await res.json();
       setUserData({
@@ -81,7 +80,7 @@ const Navbar = () => {
         email: data.data.data.email,
         avatar: data.data.data.avatar,
       });
-      console.log(data.data.data)
+      console.log(data.data.data);
       setIsLoggedIn(true);
     };
     fetchData();
@@ -280,15 +279,15 @@ const Navbar = () => {
                     </>
                   ) : (
                     <>
-                      <DropdownMenuSeparator className="" />
-                      <Link href={'/signup'}>
+                      <DropdownMenuSeparator />
+                      <Link href={"/signup"}>
                         <DropdownMenuItem className="flex-center gap-3 cursor-pointer p-2 text-lg">
                           <UserPlus2 />
                           Sign Up
                         </DropdownMenuItem>
                       </Link>
-                      <DropdownMenuSeparator className="" />
-                      <Link href={'/login'}>
+                      <DropdownMenuSeparator />
+                      <Link href={"/login"}>
                         <DropdownMenuItem className="flex-center gap-3 cursor-pointer p-2 text-lg">
                           <KeyRound />
                           Login
@@ -329,7 +328,11 @@ const Navbar = () => {
               <Accordion type="single" collapsible>
                 <AccordionItem value="profile">
                   <AccordionTrigger>
-                    <div className="flex-center gap-4 mr-5">
+                    <div
+                      className={`flex-center gap-4 w-full ${
+                        isLoggedIn ? "mr-5" : ""
+                      }`}
+                    >
                       <Image
                         src={
                           userData.avatar ? userData.avatar : "/icons/user.svg"
@@ -339,44 +342,76 @@ const Navbar = () => {
                         alt="User Icon"
                         className="rounded-full"
                       />
-                      <div className="flex-center gap-1 flex-col">
-                        <h3 className="text-sm font-semibold">User Name</h3>
-                        <p className="text-xs text-gray-500">User Email</p>
-                      </div>
+                      {isLoggedIn ? (
+                        <>
+                          <div className="flex-center gap-1 flex-col">
+                            <h3 className="text-sm font-semibold">
+                              {userData.username}
+                            </h3>
+                            <p className="text-xs text-gray-500">
+                              {userData.email}
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
                     <DropdownMenuSeparator />
                     <DropdownMenuSeparator />
-                    <Link href={"/profile"}>
-                      <div className="flex items-center justify-start gap-3 cursor-pointer py-2">
-                        <Settings />
-                        <p>Manage Account</p>
-                      </div>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <div
-                      className="flex items-center justify-start gap-3 cursor-pointer pt-2"
-                      onClick={async () => {
-                        const response = await fetch("/api/user/logout", {
-                          method: "GET",
-                        });
-                        if (!response.ok) {
-                          toast({ title: "Something went wrong" });
-                        }
+                    {isLoggedIn ? (
+                      <>
+                        <Link href={"/profile"}>
+                          <div className="flex items-center justify-start gap-3 cursor-pointer py-2">
+                            <Settings />
+                            <p>Manage Account</p>
+                          </div>
+                        </Link>
+                        <DropdownMenuSeparator />
+                        <div
+                          className="flex items-center justify-start gap-3 cursor-pointer pt-2"
+                          onClick={async () => {
+                            const response = await fetch("/api/user/logout", {
+                              method: "GET",
+                            });
+                            if (!response.ok) {
+                              toast({ title: "Something went wrong" });
+                            }
 
-                        setUserData({
-                          username: "",
-                          email: "",
-                          avatar: "",
-                        });
+                            setUserData({
+                              username: "",
+                              email: "",
+                              avatar: "",
+                            });
 
-                        toast({ title: "Logout Successfully" });
-                      }}
-                    >
-                      <LogOut />
-                      Sign Out
-                    </div>
+                            toast({ title: "Logout Successfully" });
+                          }}
+                        >
+                          <LogOut />
+                          Sign Out
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <>
+                          <Link href={"/signup"}>
+                            <div className="flex-center gap-3 cursor-pointer p-2 text-lg">
+                              <UserPlus2 />
+                              Sign Up
+                            </div>
+                          </Link>
+                          <DropdownMenuSeparator className="" />
+                          <Link href={"/login"}>
+                            <div className="flex-center gap-3 cursor-pointer p-2 text-lg">
+                              <KeyRound />
+                              Login
+                            </div>
+                          </Link>
+                        </>
+                      </>
+                    )}
                   </AccordionContent>
                 </AccordionItem>
                 <div className="flex-center flex-col gap-3 pt-3">
