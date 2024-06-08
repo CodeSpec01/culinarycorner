@@ -48,8 +48,10 @@ import {
 import { usePathname } from "next/navigation";
 import { links } from "@/src/utils/constants";
 import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   const { toast } = useToast();
   const { theme } = useTheme();
   const pathName = usePathname();
@@ -263,6 +265,9 @@ const Navbar = () => {
                       <DropdownMenuItem
                         className="flex-center gap-3 cursor-pointer p-2 text-lg"
                         onClick={async () => {
+                          toast({
+                            title: "Logging out....."
+                          })
                           const response = await fetch("/api/user/logout", {
                             method: "GET",
                           });
@@ -271,6 +276,7 @@ const Navbar = () => {
                           }
 
                           toast({ title: "Logout Successfully" });
+                          router.refresh();
                         }}
                       >
                         <LogOut />
@@ -373,6 +379,9 @@ const Navbar = () => {
                         <div
                           className="flex items-center justify-start gap-3 cursor-pointer pt-2"
                           onClick={async () => {
+                            toast({
+                              title: "Logging out....."
+                            })
                             const response = await fetch("/api/user/logout", {
                               method: "GET",
                             });
@@ -387,6 +396,7 @@ const Navbar = () => {
                             });
 
                             toast({ title: "Logout Successfully" });
+                            router.refresh();
                           }}
                         >
                           <LogOut />
