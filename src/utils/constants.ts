@@ -20,28 +20,28 @@ const links = [
 const outlets = [
   {
     image: "/images/outlet-1.png",
-    address: "Outlet 1",
-    maps: "outlet1",
+    address: "Barbeque Nation, Rajouri Garden, Delhi IN",
+    maps: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1237.9175211566462!2d77.12198789863167!3d28.648952730363522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d03c5be220ce1%3A0x769cc4d039bb09ba!2sBarbeque%20Nation%20Rajouri%20Garden!5e0!3m2!1sen!2sin!4v1717869995525!5m2!1sen!2sin",
   },
   {
     image: "/images/outlet-2.png",
-    address: "Outlet 2",
-    maps: "outlet1",
+    address: "Starbucks, Malcha Marg, Delhi IN",
+    maps: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56046.80609063988!2d77.1220522484712!3d28.602015288285127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1d722d60a45f%3A0xbe15a0d6ff93930a!2sStarbucks%20Coffee!5e0!3m2!1sen!2sin!4v1717869273068!5m2!1sen!2sin",
   },
   {
     image: "/images/outlet-3.png",
-    address: "Outlet 3",
-    maps: "outlet1",
+    address: "Bikanervala, Rajiv Chowk, Delhi IN",
+    maps: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7003.966940978068!2d77.20781935869141!3d28.630257500000013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd493fb71f5b%3A0xd0f57f5f8315359!2sBikanervala!5e0!3m2!1sen!2sin!4v1717870714449!5m2!1sen!2sin",
   },
   {
     image: "/images/outlet-4.png",
-    address: "Outlet 4",
-    maps: "outlet1",
+    address: "Burger King, Kingsway, London UK",
+    maps: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19864.98255336027!2d-0.1675522327423093!3d51.51096269879986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b351cb4ff99%3A0x6e88f8f68438029!2sBurger%20King!5e0!3m2!1sen!2sin!4v1717871885044!5m2!1sen!2sin",
   },
   {
     image: "/images/outlet-3.png",
-    address: "Outlet 3",
-    maps: "outlet1",
+    address: "Pizza Hut, Shibuya, Tokyo JP",
+    maps: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d33321.09888300886!2d77.25916600113288!3d28.616300003410903!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfb507a22ba69%3A0x5bee732204eb89ea!2sMcDonald&#39;s!5e0!3m2!1sen!2sin!4v1717871346938!5m2!1sen!2sin",
   },
 ];
 

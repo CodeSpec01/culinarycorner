@@ -5,7 +5,17 @@ import Image from "next/image";
 import { outlets } from "../utils/constants";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import { CircleArrowDown } from "lucide-react";
+import { CircleArrowDown, MapPin, MapPinned } from "lucide-react";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 const Outlets = ({ theme }: { theme: string }) => {
   return (
@@ -53,9 +63,41 @@ const Outlets = ({ theme }: { theme: string }) => {
               >
                 {outlet.address}
               </p>
-              <div className="absolute w-full h-full flex items-end justify-center -bottom-[10%] hover:bottom-[10%] transition-all duration-500">
-                <Button tabIndex={-1}>{outlet.maps}</Button>
-              </div>
+              <Drawer>
+                <DrawerTrigger className="w-full">
+                  <div className="absolute w-full h-full flex items-end justify-center -bottom-[10%] hover:bottom-[10%] transition-all duration-500">
+                    <Button
+                      tabIndex={-1}
+                      // onClick={() => {
+                      //   window.open(outlet.maps);
+                      // }}
+                    >
+                      Get Directions <MapPin />
+                    </Button>
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className="w-full flex-center">
+                  <DrawerHeader>
+                    <DrawerTitle className="flex-center gap-3">
+                      Directions <MapPinned />
+                    </DrawerTitle>
+                  </DrawerHeader>
+                  <iframe
+                    src={outlet.maps}
+                    width="600"
+                    height="450"
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    style={{ border: 0 }}
+                  ></iframe>
+                  <DrawerFooter>
+                    <DrawerClose>
+                      <Button variant="destructive">Close</Button>
+                    </DrawerClose>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
             </div>
           </div>
         ))}
