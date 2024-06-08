@@ -279,6 +279,7 @@ const Navbar = () => {
                           });
 
                           setIsLoggedIn(false);
+                          router.push("/")
                           toast({ title: "Logout Successfully" });
                         }}
                       >
@@ -399,6 +400,7 @@ const Navbar = () => {
                             });
 
                             setIsLoggedIn(false);
+                            router.push("/")
                             toast({ title: "Logout Successfully" });
                           }}
                         >
