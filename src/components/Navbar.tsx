@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -45,46 +45,58 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/src/components/ui/accordion";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { links } from "@/src/utils/constants";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
   const { theme } = useTheme();
   const pathName = usePathname();
   const [mounted, setMounted] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [userData, setUserData] = useState({
     username: "Loading...",
     email: "loading...",
     avatar: "",
   });
 
+  const fetchData = async () => {
+    const res = await fetch("/api/user/quickData", {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      setIsLoggedIn(false);
+      setButtonDisabled(false);
+      return;
+    }
+
+    const data = await res.json();
+    setUserData({
+      username: data.data.data.username,
+      email: data.data.data.email,
+      avatar: data.data.data.avatar,
+    });
+    setIsLoggedIn(true);
+    setButtonDisabled(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/api/user/quickData", {
-        method: "GET",
-      });
-
-      if (!res.ok) {
-        setIsLoggedIn(false);
-        return;
-      }
-
-      const data = await res.json();
-      setUserData({
-        username: data.data.data.username,
-        email: data.data.data.email,
-        avatar: data.data.data.avatar,
-      });
-      setIsLoggedIn(true);
-    };
     fetchData();
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (searchParams.toString()) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      fetchData();
+    }
+  }, [searchParams.toString()]);
 
   if (!mounted) {
     return;
@@ -110,6 +122,7 @@ const Navbar = () => {
             className={clsx("sm:w-[18vw] md:w-[15vw] lg:w-auto xl:w-auto", {
               invert: theme === "light",
             })}
+            priority
           />
         </div>
 
@@ -241,13 +254,20 @@ const Navbar = () => {
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
 
-                      <Link href={"/profile"}>
-                        <DropdownMenuItem className="flex-center justify-start gap-3 cursor-pointer p-2">
+                      <Link
+                        href={"/profile"}
+                        className={`${
+                          buttonDisabled
+                            ? "pointer-events-none"
+                            : "pointer-events-auto"
+                        }`}
+                      >
+                        <DropdownMenuItem className="flex-center gap-3 cursor-pointer p-2">
                           <Settings />
                           <p className="text-lg">Manage Account</p>
                         </DropdownMenuItem>
                       </Link>
-                      <DropdownMenuSeparator className="" />
+                      <DropdownMenuSeparator />
                     </>
                   ) : (
                     <></>
@@ -258,9 +278,13 @@ const Navbar = () => {
                   </div>
                   {isLoggedIn ? (
                     <>
-                      <DropdownMenuSeparator className="" />
+                      <DropdownMenuSeparator />
                       <DropdownMenuItem
-                        className="flex-center gap-3 cursor-pointer p-2 text-lg"
+                        className={`flex-center gap-3 cursor-pointer p-2 text-lg ${
+                          buttonDisabled
+                            ? "pointer-events-none"
+                            : "pointer-events-auto"
+                        }`}
                         onClick={async () => {
                           toast({
                             title: "Logging out.....",
@@ -279,7 +303,7 @@ const Navbar = () => {
                           });
 
                           setIsLoggedIn(false);
-                          router.push("/")
+                          router.push("/");
                           toast({ title: "Logout Successfully" });
                         }}
                       >
@@ -290,14 +314,28 @@ const Navbar = () => {
                   ) : (
                     <>
                       <DropdownMenuSeparator />
-                      <Link href={"/signup"}>
+                      <Link
+                        href={"/signup"}
+                        className={`${
+                          buttonDisabled
+                            ? "pointer-events-none"
+                            : "pointer-events-auto"
+                        }`}
+                      >
                         <DropdownMenuItem className="flex-center gap-3 cursor-pointer p-2 text-lg">
                           <UserPlus2 />
                           Sign Up
                         </DropdownMenuItem>
                       </Link>
                       <DropdownMenuSeparator />
-                      <Link href={"/login"}>
+                      <Link
+                        href={"/login"}
+                        className={`${
+                          buttonDisabled
+                            ? "pointer-events-none"
+                            : "pointer-events-auto"
+                        }`}
+                      >
                         <DropdownMenuItem className="flex-center gap-3 cursor-pointer p-2 text-lg">
                           <KeyRound />
                           Login
@@ -373,7 +411,14 @@ const Navbar = () => {
                     <DropdownMenuSeparator />
                     {isLoggedIn ? (
                       <>
-                        <Link href={"/profile"}>
+                        <Link
+                          href={"/profile"}
+                          className={`${
+                            buttonDisabled
+                              ? "pointer-events-none"
+                              : "pointer-events-auto"
+                          }`}
+                        >
                           <div className="flex items-center justify-start gap-3 cursor-pointer py-2">
                             <Settings />
                             <p>Manage Account</p>
@@ -381,7 +426,11 @@ const Navbar = () => {
                         </Link>
                         <DropdownMenuSeparator />
                         <div
-                          className="flex items-center justify-start gap-3 cursor-pointer pt-2"
+                          className={`flex items-center justify-start gap-3 cursor-pointer pt-2 ${
+                            buttonDisabled
+                              ? "pointer-events-none"
+                              : "pointer-events-auto"
+                          }`}
                           onClick={async () => {
                             toast({
                               title: "Logging out.....",
@@ -400,7 +449,7 @@ const Navbar = () => {
                             });
 
                             setIsLoggedIn(false);
-                            router.push("/")
+                            router.push("/");
                             toast({ title: "Logout Successfully" });
                           }}
                         >
@@ -411,14 +460,28 @@ const Navbar = () => {
                     ) : (
                       <>
                         <>
-                          <Link href={"/signup"}>
+                          <Link
+                            href={"/signup"}
+                            className={`${
+                              buttonDisabled
+                                ? "pointer-events-none"
+                                : "pointer-events-auto"
+                            }`}
+                          >
                             <div className="flex-center gap-3 cursor-pointer p-2 text-lg">
                               <UserPlus2 />
                               Sign Up
                             </div>
                           </Link>
                           <DropdownMenuSeparator className="" />
-                          <Link href={"/login"}>
+                          <Link
+                            href={"/login"}
+                            className={`${
+                              buttonDisabled
+                                ? "pointer-events-none"
+                                : "pointer-events-auto"
+                            }`}
+                          >
                             <div className="flex-center gap-3 cursor-pointer p-2 text-lg">
                               <KeyRound />
                               Login

@@ -22,8 +22,9 @@ const ChefCard = ({
     >
       <Image
         src={src}
-        layout="fill"
-        objectFit="cover"
+        fill
+        sizes="auto"
+        style={{ objectFit: "cover" }}
         alt="chef"
         className="absolute"
       />
@@ -34,9 +35,7 @@ const ChefCard = ({
           }`}
         >
           {text}
-          <p className="text-right text-2xl">
-            -{name}
-          </p>
+          <span className="text-right text-2xl block">-{name}</span>
         </p>
       </div>
     </div>

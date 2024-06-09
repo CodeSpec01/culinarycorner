@@ -47,22 +47,18 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [newWindow, setNewWindow] = useState<Window & typeof globalThis>();
+  // const [newWindow, setNewWindow] = useState<Window & typeof globalThis>();
 
   useEffect(() => {
+    // setNewWindow(window);
 
-    setNewWindow(window)
-    
-    if (window.location.search.includes("?")) {
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname
-      );
-      window.location.reload();
-    }
+    // console.log("in empty use effect");
+
+    // if (window.location.search.includes("?")) {
+    //   window.history.replaceState({}, document.title, window.location.pathname);
+    //   window.location.reload();
+    // }
     const fetchData = async () => {
-
       const res = await fetch("/api/user/profile");
       const data = await res.json();
 
@@ -93,12 +89,15 @@ const ProfilePage = () => {
     setMounted(true);
   }, []);
 
-  useEffect(() => { 
-    if (window.location.search.includes("?")) {
-      window.history.replaceState({}, document.title, window.location.pathname);
-      window.location.reload();
-    }
-  },[newWindow?.location.search])
+  // useEffect(() => {
+
+  //   console.log("in non empty use effect");
+    
+  //   if (window.location.search.includes("?")) {
+  //     window.history.replaceState({}, document.title, window.location.pathname);
+  //     window.location.reload();
+  //   }
+  // }, [newWindow?.location.search]);
 
   const saveData = async (activeTabProp?: string, avatar?: File) => {
     setLoading(true);
@@ -210,8 +209,8 @@ const ProfilePage = () => {
         <div className="h-full -z-10 absolute inset-0">
           <Image
             src="/images/profile.png"
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: "cover" }}
             alt="Hero Background"
             className="-z-10"
           />
@@ -266,7 +265,9 @@ const ProfilePage = () => {
 
       <div
         id="profile"
-        className={`min-h-screen relative flex-center flex-col py-[10vh] gap-[5vh] ${theme === "light" ? "bg-[#f8f1e3]" : "bg-[#1a1a1a]"}`}
+        className={`min-h-screen relative flex-center flex-col py-[10vh] gap-[5vh] ${
+          theme === "light" ? "bg-[#f8f1e3]" : "bg-[#1a1a1a]"
+        }`}
       >
         <div>
           <h1 className="text-center text-6xl pt-5">User Details</h1>
@@ -274,8 +275,9 @@ const ProfilePage = () => {
         <div className="w-[60vw] max-w-[250px] h-[60vw] max-h-[250px] relative">
           <Image
             src={user.avatar || "/icons/user.svg"}
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: "cover" }}
+            sizes="auto"
             alt="pfp"
             className="rounded-full absolute w-[10vw] h-[10vw]"
           />

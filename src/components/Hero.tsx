@@ -11,8 +11,9 @@ const Hero = ({ theme }: { theme: string }) => {
         <div className="h-full -z-10 absolute inset-0">
           <Image
             src="/images/hero.png"
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes="auto"
+            style={{ objectFit: "cover" }}
             alt="Hero Background"
             className="-z-10"
           />
@@ -41,7 +42,7 @@ const Hero = ({ theme }: { theme: string }) => {
               }`}
             >
               <h6 className="sm:font-semibold text-sm sm:text-lg lg:text-xl">
-                Flavor meets Excellence 
+                Flavor meets Excellence
               </h6>
             </div>
             <div className="w-1 h-40">

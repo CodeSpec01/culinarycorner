@@ -154,8 +154,9 @@ export default function SignupPage() {
       <div className="relative flex-center py-[30%] sm:py-[20%] md:py-[10%] px-2">
         <Image
           src="/images/signup.png"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="auto"
+          style={{ objectFit: "cover" }}
           alt="bg"
           className="-z-10"
         />

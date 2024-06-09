@@ -13,8 +13,9 @@ export default function NotFound() {
     <div className=" h-screen flex-center flex-col gap-10">
       <Image
         src={`/images/not-found.png`}
-        layout="fill"
-        objectFit="cover"
+        fill
+        sizes="auto"
+        style={{ objectFit: "cover" }}
         alt="Hero Background"
         className="-z-10 "
       />

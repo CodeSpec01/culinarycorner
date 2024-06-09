@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} scroll-smooth md:text-lg `}>
+    <html lang="en">
+      <body className={`${inter.className} md:text-lg `}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

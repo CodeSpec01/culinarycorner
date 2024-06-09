@@ -45,8 +45,9 @@ const ReviewsHome = ({ theme }: { theme: string }) => {
       <div className="w-full relative">
         <Image
           src={"/images/review.png"}
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="auto"
+          style={{ objectFit: "cover" }}
           alt="review bg"
           className={`${theme === "dark" ? "brightness-50" : "brightness-100"}`}
         />

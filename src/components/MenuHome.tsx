@@ -82,8 +82,9 @@ const MenuHome = ({ theme }: { theme: string }) => {
       <div className="w-full min-h-[50vh] relative">
         <Image
           src={"/images/special-menu.png"}
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="auto"
+          style={{ objectFit: "cover" }}
           alt="special menu"
           className={``}
         ></Image>

@@ -168,8 +168,9 @@ const ResetPasswordPage = () => {
     <div className="relative flex-center py-[30%] sm:py-[20%] md:py-[10%] px-2">
       <Image
         src="/images/signup.png"
-        layout="fill"
-        objectFit="cover"
+        fill
+        sizes="auto"
+        style={{ objectFit: "cover" }}
         alt="bg"
         className="-z-10"
       />
@@ -273,7 +274,11 @@ const ResetPasswordPage = () => {
             <>
               {isChangingPassword ? (
                 <>
-                  <Button onClick={changePasswordFunc} className="w-full" disabled={buttonDisabled} >
+                  <Button
+                    onClick={changePasswordFunc}
+                    className="w-full"
+                    disabled={buttonDisabled}
+                  >
                     Change Password
                   </Button>
                 </>

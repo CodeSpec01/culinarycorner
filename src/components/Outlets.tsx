@@ -51,8 +51,9 @@ const Outlets = ({ theme }: { theme: string }) => {
           >
             <Image
               src={outlet.image!}
-              layout="fill"
-              objectFit="cover"
+              fill
+              sizes="auto"
+              style={{ objectFit: "cover" }}
               alt="outlet"
             />
             <div className="relative w-full h-full text-center p-4 flex-center flex-col z-10">
@@ -64,35 +65,36 @@ const Outlets = ({ theme }: { theme: string }) => {
                 {outlet.address}
               </p>
               <Drawer>
-                <DrawerTrigger className="w-full">
-                  <div className="absolute w-full h-full flex items-end justify-center -bottom-[10%] hover:bottom-[10%] transition-all duration-500">
-                    <Button
-                      tabIndex={-1}
-                      // onClick={() => {
-                      //   window.open(outlet.maps);
-                      // }}
-                    >
+                <DrawerTrigger className="w-full" asChild>
+                  <div className="absolute w-[50%] h-full flex items-end justify-center -bottom-[10%] hover:bottom-[10%] transition-all duration-500" >
+                    <Button tabIndex={-1}>
                       Get Directions <MapPin />
                     </Button>
                   </div>
                 </DrawerTrigger>
-                <DrawerContent className="w-full flex-center">
+                <DrawerContent className="w-full h-[90vh] sm:h-auto flex-center ">
                   <DrawerHeader>
                     <DrawerTitle className="flex-center gap-3">
-                      Directions <MapPinned />
+                      <Link href={outlet.link} target="_blank">
+                        <Button variant="outline">
+                          Directions <MapPinned />
+                        </Button>
+                      </Link>
                     </DrawerTitle>
                   </DrawerHeader>
-                  <iframe
-                    src={outlet.maps}
-                    width="600"
-                    height="450"
-                    allowFullScreen={true}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    style={{ border: 0 }}
-                  ></iframe>
+                  <div className="w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-full ">
+                    <iframe
+                      src={outlet.maps}
+                      className="w-full "
+                      height="450"
+                      allowFullScreen={true}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      style={{ border: 0 }}
+                    ></iframe>
+                  </div>
                   <DrawerFooter>
-                    <DrawerClose>
+                    <DrawerClose asChild>
                       <Button variant="destructive">Close</Button>
                     </DrawerClose>
                   </DrawerFooter>

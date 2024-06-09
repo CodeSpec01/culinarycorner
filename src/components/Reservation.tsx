@@ -67,9 +67,10 @@ const Reservation = ({ theme }: { theme: string }) => {
       <div className="w-full relative py-10 flex-center">
         <Image
           src={"/images/reservation.png"}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          fill
+          sizes="auto"
+          style={{ objectFit: "cover", objectPosition: "center" }}
+          
           alt="reservation bg"
           className={`${theme === "dark" ? "brightness-50" : "brightness-105"}`}
         />
@@ -143,7 +144,7 @@ const Reservation = ({ theme }: { theme: string }) => {
                   </div>
                 </CardContent>
                 <CardFooter className="w-full">
-                  <Button className="w-full" >Save changes</Button>
+                  <Button className="w-full">Save changes</Button>
                 </CardFooter>
               </Card>
             </TabsContent>

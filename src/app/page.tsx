@@ -16,10 +16,10 @@ export default function Home() {
 
   useEffect(() => {
 
-    if (window.location.search.includes("?")) {
-      window.history.replaceState({}, document.title, window.location.pathname);
-      window.location.reload();
-    }
+    // if (window.location.search.includes("?")) {
+    //   window.history.replaceState({}, document.title, window.location.pathname);
+    //   window.location.reload();
+    // }
 
     setMounted(true);
   }, []);

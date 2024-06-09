@@ -14,9 +14,9 @@ const ReviewCard = ({ name, review, image, theme }: ReviewCardType) => {
       <div className="h-[100px] w-[100px] relative ">
         <Image
           src={image}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          fill
+          sizes="auto"
+          style={{ objectFit: "cover", objectPosition: "center" }}
           alt="User Image"
           className="rounded-full relative z-10 border-4 border-[#6ba4e3cc]"
         />
