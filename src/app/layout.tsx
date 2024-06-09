@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/src/components/ThemeProvider";
-import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
 import { Toaster } from "@/src/components/ui/toaster";
+import Navbar from "@/src/components/Navbar";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
+          <Suspense fallback={<></>}>
+            <Navbar />
+          </Suspense>
           <Toaster />
           {children}
           <Footer />
