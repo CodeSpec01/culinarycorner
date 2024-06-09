@@ -266,7 +266,7 @@ const ProfilePage = () => {
 
       <div
         id="profile"
-        className="min-h-screen relative flex-center flex-col py-[10vh] gap-[5vh]"
+        className={`min-h-screen relative flex-center flex-col py-[10vh] gap-[5vh] ${theme === "light" ? "bg-[#f8f1e3]" : "bg-[#1a1a1a]"}`}
       >
         <div>
           <h1 className="text-center text-6xl pt-5">User Details</h1>
