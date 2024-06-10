@@ -338,7 +338,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (user.verifyCodeExpiry < new Date()) {
+  if (user.verifyCodeExpiry! < new Date()) {
     return NextResponse.json(
       {
         message: "OTP expired",

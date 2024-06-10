@@ -187,19 +187,21 @@ const Navbar = () => {
           </DropdownMenu>
 
           <div className="flex gap-5 lg:gap-8 items-center">
-            <button
-              className={clsx(
-                "p-2 rounded-md overflow-hidden relative cursor-pointer hover:border-transparent",
-                {
-                  "reservation-dark hover:text-black focus:text-black border-white border-2":
-                    theme !== "light",
-                  "reservation-light hover:text-white focus:text-white border-black border-2":
-                    theme === "light",
-                }
-              )}
-            >
-              Reservation
-            </button>
+            <Link href={'/reservation'}>
+              <button
+                className={clsx(
+                  "p-2 rounded-md overflow-hidden relative cursor-pointer hover:border-transparent",
+                  {
+                    "reservation-dark hover:text-black focus:text-black border-white border-2":
+                      theme !== "light",
+                    "reservation-light hover:text-white focus:text-white border-black border-2":
+                      theme === "light",
+                  }
+                )}
+              >
+                Reservation
+              </button>
+            </Link>
 
             <div
               className={clsx("border-[1px] rounded-full w-12 h-12", {

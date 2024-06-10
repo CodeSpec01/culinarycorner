@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isPasswordCorrect = await bcryptjs.compare(password, user.password);
+    const isPasswordCorrect = await bcryptjs.compare(password, user.password!);
 
     if (!isPasswordCorrect) {
       return NextResponse.json(
@@ -329,7 +329,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (user.verifyCodeExpiry < new Date()) {
+  if (user.verifyCodeExpiry! < new Date()) {
     return NextResponse.json(
       {
         message: "OTP expired",

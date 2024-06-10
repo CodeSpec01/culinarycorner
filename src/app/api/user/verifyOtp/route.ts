@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    if (user.forgotPasswordCodeExpiry < new Date()) {
+    if (user.forgotPasswordCodeExpiry! < new Date()) {
       return NextResponse.json(
         {
           message: "OTP expired",
