@@ -9,14 +9,14 @@ export interface userSchemaInterface extends Document {
   username: string;
   email: string;
   fullName: string;
-  password: string;
+  password?: string;
   avatar: string;
-  verifyCode: string;
-  verifyCodeExpiry: Date;
-  forgotPasswordCode: string;
-  forgotPasswordCodeExpiry: Date;
-  orders: orderSchemaInterface[];
-  reservations: reservationSchemaInterface[];
+  verifyCode?: string;
+  verifyCodeExpiry?: Date;
+  forgotPasswordCode?: string;
+  forgotPasswordCodeExpiry?: Date;
+  orders?: orderSchemaInterface[];
+  reservations?: reservationSchemaInterface[];
 }
 
 const userSchema: Schema<userSchemaInterface> = new Schema(

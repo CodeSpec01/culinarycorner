@@ -22,7 +22,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
+} from "@/src/components/ui/input-otp";
 import PasswordField from "@/src/components/PasswordField";
 
 const ResetPasswordPage = () => {
@@ -290,7 +290,7 @@ const ResetPasswordPage = () => {
                         Verify OTP
                       </Button>
                       <Button
-                        variant="outline"
+                        variant="destructive"
                         onClick={() => {
                           setIsEnteringOTP(false);
                         }}

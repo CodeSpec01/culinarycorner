@@ -15,7 +15,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from "@/src/components/ui/drawer";
 
 const Outlets = ({ theme }: { theme: string }) => {
   return (

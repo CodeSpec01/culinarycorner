@@ -212,35 +212,44 @@ const Navbar = () => {
             >
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Image
-                    src={userData.avatar ? userData.avatar : "/icons/user.svg"}
-                    width={48}
-                    height={48}
-                    className={clsx(
-                      "object-cover cursor-pointer rounded-full",
-                      {
-                        invert: !userData.avatar && theme === "light",
+                  <div className="w-12 h-12 rounded-full relative">
+                    <Image
+                      src={
+                        userData.avatar ? userData.avatar : "/icons/user.svg"
                       }
-                    )}
-                    alt="User Initial Letter"
-                  />
+                      fill
+                      style={{ objectFit: "cover", objectPosition: "center" }}
+                      className={clsx(
+                        "object-cover cursor-pointer rounded-full absolute",
+                        {
+                          invert: !userData.avatar && theme === "light",
+                        }
+                      )}
+                      alt="User Initial Letter"
+                    />
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="px-4">
                   {isLoggedIn ? (
                     <>
                       <DropdownMenuLabel>
                         <div className="flex-center gap-4">
-                          <Image
-                            src={
-                              userData.avatar
-                                ? userData.avatar
-                                : "/icons/user.svg"
-                            }
-                            width={60}
-                            height={60}
-                            alt="User Icon"
-                            className="rounded-full"
-                          />
+                          <div className="w-14 h-14 rounded-full relative">
+                            <Image
+                              src={
+                                userData.avatar
+                                  ? userData.avatar
+                                  : "/icons/user.svg"
+                              }
+                              fill
+                              style={{
+                                objectFit: "cover",
+                                objectPosition: "center",
+                              }}
+                              alt="User Icon"
+                              className="rounded-full absolute"
+                            />
+                          </div>
 
                           <div className="flex-center gap-1 flex-col">
                             <h3 className="font-semibold text-lg">
@@ -381,15 +390,27 @@ const Navbar = () => {
                         !isLoggedIn ? "mr-5" : ""
                       }`}
                     >
-                      <Image
-                        src={
-                          userData.avatar ? userData.avatar : "/icons/user.svg"
-                        }
-                        width={40}
-                        height={40}
-                        alt="User Icon"
-                        className="rounded-full"
-                      />
+                      <div className="w-14 h-14 rounded-full relative">
+                        <Image
+                          src={
+                            userData.avatar
+                              ? userData.avatar
+                              : "/icons/user.svg"
+                          }
+                          fill
+                          style={{
+                            objectFit: "cover",
+                            objectPosition: "center",
+                          }}
+                          alt="User Icon"
+                          className={clsx(
+                            "object-cover cursor-pointer rounded-full absolute",
+                            {
+                              invert: !userData.avatar && theme === "light",
+                            }
+                          )}
+                        />
+                      </div>
                       {isLoggedIn ? (
                         <>
                           <div className="flex-center gap-1 flex-col">

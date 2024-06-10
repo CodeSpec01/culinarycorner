@@ -30,7 +30,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
+} from "@/src/components/ui/input-otp";
 
 export default function LoginPage() {
   const passwordRegex =
@@ -132,12 +132,12 @@ export default function LoginPage() {
     const res = await fetch("/api/user/login", {
       method: "GET",
       headers: {
-        "code": otp        
+        code: otp,
       },
     });
 
     const resJson = await res.json();
-    
+
     if (!res.ok) {
       setLoading(false);
       setErrorMsg(resJson.message);
@@ -158,7 +158,7 @@ export default function LoginPage() {
         <Image
           src="/images/signup.png"
           fill
-          style={{objectFit: "cover"}}
+          style={{ objectFit: "cover" }}
           alt="bg"
           className="-z-10"
         />
@@ -343,7 +343,7 @@ export default function LoginPage() {
                       Verify OTP
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="destructive"
                       onClick={() => {
                         setIsEnteringOtp(false);
                       }}

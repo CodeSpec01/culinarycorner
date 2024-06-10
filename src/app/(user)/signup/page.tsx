@@ -25,7 +25,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
+} from "@/src/components/ui/input-otp";
 
 export default function SignupPage() {
   const passwordRegex =
@@ -130,9 +130,9 @@ export default function SignupPage() {
     const res = await fetch("/api/user/signup", {
       method: "GET",
       headers: {
-        "code": OTP
-      }
-    })
+        code: OTP,
+      },
+    });
 
     const resJson = await res.json();
     if (!res.ok) {
@@ -145,7 +145,7 @@ export default function SignupPage() {
     setLoading(false);
     setSuccessMsg(resJson.message + "-redirecting to home page....");
     setTimeout(() => {
-      router.push('/?q=signup');
+      router.push("/?q=signup");
     }, 2000);
   };
 
@@ -291,7 +291,7 @@ export default function SignupPage() {
                       Verify OTP
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="destructive"
                       onClick={() => {
                         setIsEnteringOtp(false);
                         setErrorMsg("");

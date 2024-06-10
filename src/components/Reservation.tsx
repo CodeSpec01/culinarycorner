@@ -21,14 +21,137 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
-import { CalendarIcon, Copy } from "lucide-react";
+import { CalendarIcon, Copy, Router, Undo2Icon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { format } from "date-fns";
 import { useToast } from "./ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
+import { time } from "../utils/constants";
+import Loading from "./Loading";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/src/components/ui/input-otp";
+import { useRouter } from "next/navigation";
 
 const Reservation = ({ theme }: { theme: string }) => {
+  const router = useRouter();
   const { toast } = useToast();
-  const [date, setDate] = useState<Date>();
+  const date = new Date();
+  date.setHours(0, 0, 0);
+  const [details, setDetails] = useState({
+    customerName: "",
+    attendes: 1,
+    date: date,
+  });
+  const [loading, setLoading] = useState(false);
+  const [isEnteringOtp, setIsEnteringOtp] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [email, setEmail] = useState("");
+
+  const reservationFunc = async () => {
+    setLoading(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    if (
+      details.date < new Date() ||
+      (details.date.getHours() <= 9 && details.date.getMinutes() !== 30) ||
+      ((details.date.getDay() === 6 || details.date.getDay() === 0) &&
+        details.date.getHours() > 23) ||
+      (details.date.getDay() !== 6 &&
+        details.date.getDay() !== 0 &&
+        details.date.getHours() > 21)
+    ) {
+      setLoading(false);
+      setErrorMsg(
+        "Invalid Reservation timings, please reselect time for reservations."
+      );
+      return;
+    }
+
+    const res = await fetch("/api/user/quickData", {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      setLoading(false);
+      setErrorMsg("Please Login to make a reservation");
+      return;
+    }
+
+    const resJson = await res.json();
+    setEmail(resJson.data.data.email);
+
+    const available = await fetch(
+      `/api/reservation/?date=${details.date.toLocaleString()}&attendees=${
+        details.attendes
+      }&email=${resJson.data.data.email}`,
+      {
+        method: "GET",
+      }
+    );
+
+    const availableJson = await available.json();
+
+    if (!available.ok) {
+      setLoading(false);
+      setErrorMsg(availableJson.message);
+      return;
+    }
+
+    setLoading(false);
+    setSuccessMsg(availableJson.message + "-");
+    setIsEnteringOtp(true);
+  };
+
+  const verifyOtpFunc = async () => {
+    setLoading(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+    if (!otp) {
+      setLoading(false);
+      setErrorMsg("OTP is required!");
+      return;
+    }
+
+    const res = await fetch(`/api/reservation/?email=${email}`, {
+      method: "POST",
+      body: JSON.stringify({
+        customerName: details.customerName,
+        attendees: details.attendes,
+        date: details.date.toLocaleString(),
+      }),
+    });
+
+    const resJson = await res.json();
+
+    if (!res.ok) {
+      setLoading(false);
+      setErrorMsg(resJson.message);
+      return;
+    }
+
+    setButtonDisabled(true);
+    setLoading(false);
+    setSuccessMsg(resJson.message + "-redirecting to profile page");
+    setTimeout(() => {
+      router.push("/profile");
+    }, 2000);
+  };
+
   return (
     <div
       id="reservation"
@@ -70,7 +193,6 @@ const Reservation = ({ theme }: { theme: string }) => {
           fill
           sizes="auto"
           style={{ objectFit: "cover", objectPosition: "center" }}
-          
           alt="reservation bg"
           className={`${theme === "dark" ? "brightness-50" : "brightness-105"}`}
         />
@@ -78,7 +200,7 @@ const Reservation = ({ theme }: { theme: string }) => {
         <div className="z-20 flex-center">
           <Tabs
             defaultValue="online"
-            className="w-[90%] flex-col flex justify-center"
+            className="w-full flex-col flex justify-center"
           >
             <TabsList className="grid w-full grid-cols-2 gap-3 shadow-md shadow-black">
               <TabsTrigger value="online">Online Reservation</TabsTrigger>
@@ -95,56 +217,215 @@ const Reservation = ({ theme }: { theme: string }) => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <div className="space-y-1">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Enter your name" required />
-                  </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="attendes">Number of Attendees</Label>
-                    <Input
-                      id="attendes"
-                      defaultValue="1"
-                      type="number"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="date">Pick date for Reservation</Label>
-                    <Popover>
-                      <PopoverTrigger asChild className="w-full">
-                        <Button
-                          variant={"outline"}
-                          className={`
-                            "w-full justify-start text-left font-normal",
-                            ${!date && "text-muted-foreground"}
-                          `}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {date ? (
-                            format(date, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={date}
-                          onSelect={setDate}
-                          disabled={(date) => {
-                            const today = new Date();
-                            today.setHours(0, 0, 0, 0); // Clear the time part
-                            return date < today;
+                  {isEnteringOtp ? (
+                    <>
+                      <div className="flex flex-col space-y-1.5 w-full">
+                        <Label htmlFor="otp">Enter OTP for confirmation</Label>
+                        <InputOTP
+                          maxLength={6}
+                          value={otp}
+                          onChange={(e) => {
+                            setOtp(e);
                           }}
-                          initialFocus
+                        >
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                          </InputOTPGroup>
+                          <InputOTPSeparator />
+                          <InputOTPGroup>
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="space-y-1">
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                          id="name"
+                          placeholder="Enter your name"
+                          required
+                          value={details.customerName}
+                          onChange={(e) => {
+                            setDetails((prev) => ({
+                              ...prev,
+                              customerName: e.target.value,
+                            }));
+                          }}
                         />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="attendes">Number of Attendees</Label>
+                        <Input
+                          id="attendes"
+                          type="number"
+                          required
+                          value={details.attendes}
+                          onChange={(e) => {
+                            setDetails((prev) => ({
+                              ...prev,
+                              attendes: Number(e.target.value),
+                            }));
+                          }}
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="date">Pick date for Reservation</Label>
+                        <Popover>
+                          <PopoverTrigger asChild className="w-full">
+                            <Button
+                              variant={"outline"}
+                              className={`
+                            "w-full justify-start text-left font-normal",
+                            ${!details.date && "text-muted-foreground"}
+                            `}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {details.date ? (
+                                format(details.date, "PPPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0">
+                            <Calendar
+                              mode="single"
+                              selected={details.date}
+                              onSelect={(e) => {
+                                if (e) {
+                                  const newDate = new Date(e!);
+                                  newDate.setHours(details.date.getHours());
+                                  newDate.setMinutes(details.date.getMinutes());
+                                  setDetails((prev) => ({
+                                    ...prev,
+                                    date: newDate,
+                                  }));
+                                }
+                              }}
+                              disabled={(date) => {
+                                const today = new Date();
+                                today.setHours(0, 0, 0, 0);
+                                return date < today;
+                              }}
+                              initialFocus
+                            ></Calendar>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="time">
+                          Choose time for Reservation
+                        </Label>
+                        <Select
+                          onValueChange={(e) => {
+                            const timeArray = e.split(":");
+                            details.date.setHours(
+                              Number(timeArray[0]),
+                              Number(timeArray[1].slice(0, 2))
+                            );
+                          }}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select time" />
+                          </SelectTrigger>
+                          <SelectContent className="w-full">
+                            <SelectGroup className="h-[30vh] w-full">
+                              {details.date.getDay() != 0 &&
+                              details.date.getDay() != 6 ? (
+                                <>
+                                  {time.map((individualTime, index) => (
+                                    <>
+                                      {index < 24 && (
+                                        <SelectItem
+                                          value={individualTime}
+                                          key={index}
+                                          className=" w-full text-center"
+                                        >
+                                          {individualTime}
+                                        </SelectItem>
+                                      )}
+                                    </>
+                                  ))}
+                                </>
+                              ) : (
+                                <>
+                                  {time.map((individualTime, index) => (
+                                    <SelectItem
+                                      value={individualTime}
+                                      key={index}
+                                      className="w-full text-center"
+                                    >
+                                      {individualTime}
+                                    </SelectItem>
+                                  ))}
+                                </>
+                              )}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </>
+                  )}
+                  <p
+                    className={`text-xs ${
+                      errorMsg ? "text-red-500" : "text-green-500"
+                    }`}
+                  >
+                    {errorMsg
+                      ? errorMsg
+                      : `${successMsg!.slice(0, successMsg?.indexOf("-"))}`}
+                    <br />
+                    {successMsg?.slice(successMsg?.indexOf("-") + 1)}
+                  </p>
                 </CardContent>
                 <CardFooter className="w-full">
-                  <Button className="w-full">Save changes</Button>
+                  {loading ? (
+                    <div className="h-[10vh] w-full relative flex-center">
+                      <Loading
+                        width="50"
+                        heigth="50"
+                        className="top-[0] left-[0] w-full flex-center"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      {isEnteringOtp ? (
+                        <div className="w-full flex flex-col gap-4">
+                          <Button
+                            onClick={verifyOtpFunc}
+                            className="w-full"
+                            disabled={buttonDisabled}
+                          >
+                            Verify OTP
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            disabled={buttonDisabled}
+                            onClick={() => {
+                              setIsEnteringOtp(false);
+                              setSuccessMsg("");
+                              setErrorMsg("");
+                            }}
+                            className="w-full"
+                          >
+                            Go back <Undo2Icon size={18} className="ml-2" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <>
+                          <Button className="w-full" onClick={reservationFunc}>
+                            Make Reservation
+                          </Button>
+                        </>
+                      )}
+                    </>
+                  )}
                 </CardFooter>
               </Card>
             </TabsContent>
