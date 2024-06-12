@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Culinary Corner
 
-## Getting Started
+Welcome to Culinary Corner, your ultimate destination for a seamless and enjoyable dining experience. This project combines advanced web development techniques to provide users with a robust and secure platform for online table reservations, food ordering, and profile management.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Custom Authentication**: Login, signup, and profile management system with the freedom to change profile picture and details.
+- **Online Table Reservation**: Effortlessly book your favorite dining spot online.
+- **Online Food Ordering**: Order your favorite dishes from the comfort of your home.
+- **Two-Factor Authentication**: Enhanced security with OTP on email at every important step.
+- **Light and Dark Theme**: User-friendly interface with light and dark theme options powered by ShadCN UI.
+- **Secure Data Management**: JWT for secure tokenization and bcrypt for safe password management.
+- **Robust Database**: MongoDB for efficient data storage and retrieval.
+- **TypeScript**: Ensuring low bugs in code for a smoother development experience.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tech Stack
 
-## Learn More
+- **Frontend**: Next.js, React, TypeScript, ShadCN UI
+- **Backend**: Next.js
+- **Database**: MongoDB
+- **Authentication**: JWT, bcrypt
+- **Two-Factor Authentication**: NodeMailer for email OTP
+- **Styling**: CSS, ShadCN
+- **Hosting**: Vercel
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To get started with Culinary Corner, follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. **Clone the repository:**
 
-## Deploy on Vercel
+   ```bash
+   git clone https://github.com/CodeSpec01/culinarycorner.git
+   cd culinary-corner
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Install dependencies:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory and add the following:
+
+   ```env
+   MONGODB_URI = your environment value
+   JWT_SECRET = your environment value
+   EMAIL_ID = your environment value
+   EMAIl_PASSWORD = your environment value
+   NEXT_CLOUDINARY_CLOUD_NAME = your environment value
+   NEXT_CLOUDINARY_API_KEY = your environment value
+   NEXT_CLOUDINARY_API_SECRET = your environment value
+   ```
+
+4. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser:**
+   Visit `http://localhost:3000` to see the application in action.
+
+## Usage
+
+### User Authentication
+
+- **Signup/Login**: Users can create an account or log in to access their profiles.
+- **Profile Management**: Users can update their profile picture and details.
+- **Two-Factor Authentication**: Users receive an OTP via email for all critical actions.
+
+### Table Reservation
+
+- **Reserve a Table**: Users can book a table at their preferred time and date depending upon availability in the restaurant.
+
+### Food Ordering
+
+- **Order Food**: Users can browse the menu, select dishes, and place orders online.
+
+## API Endpoints
+
+### Authentication
+
+- **POST /api/user/signup**: Create a new user account.
+- **POST /api/user/login**: Authenticate a user and return a JWT.
+- **GET /api/user/(login/signup)**: Send OTP to user’s email for two-factor authentication.
+
+### Profile
+
+- **GET /api/user/profile**: Retrieve user profile details.
+- **POST /api/user/profile**: Update user profile details.
+
+### Reservations
+
+- **POST /api/reservation**: Make a new table reservation.
+- **GET /api/reservation**: Check availability for reservations.
+
+### Orders
+
+- **POST /api/order**: Place a new food order.
+- **GET /api/order**: Retrieve user data and initiate order verification.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes.
+4. Submit a pull request.
