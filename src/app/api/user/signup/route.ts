@@ -288,7 +288,7 @@ export async function POST(request: NextRequest) {
             <tbody>
               <tr>
                 <td>
-                  <p style="font-size: 14px; line-height: 24px; margin: 16px 0; text-align: center; color: #9ca3af; margin-bottom: 45px;">&copy 2024 Culinary Corner<br>NSUT Dwarka, Delhi 110078, IN</p>
+                  <p style="font-size: 14px; line-height: 24px; margin: 16px 0; text-align: center; color: #9ca3af; margin-bottom: 45px;">&copy; 2024 Culinary Corner<br>NSUT Dwarka, Delhi 110078, IN</p>
                 </td>
               </tr>
             </tbody>
@@ -450,7 +450,7 @@ export async function GET(request: NextRequest) {
             <tbody>
               <tr>
                 <td>
-                  <p style="font-size: 14px; line-height: 24px; margin: 16px 0; text-align: center; color: #9ca3af; margin-bottom: 45px;">Culinary Corner, NSUT Dwarka, Delhi 110078, IN</p>
+                  <p style="font-size: 14px; line-height: 24px; margin: 16px 0; text-align: center; color: #9ca3af; margin-bottom: 45px;">&copy; 2024 Culinary Corner<br>NSUT Dwarka, Delhi 110078, IN</p>
                 </td>
               </tr>
             </tbody>

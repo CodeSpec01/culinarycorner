@@ -287,7 +287,7 @@ export async function GET(request: NextRequest) {
                         margin-bottom: 45px;
                       "
                     >
-                      &copy 2024 Culinary Corner<br />NSUT Dwarka, Delhi 110078,
+                      &copy; 2024 Culinary Corner<br />NSUT Dwarka, Delhi 110078,
                       IN
                     </p>
                   </td>

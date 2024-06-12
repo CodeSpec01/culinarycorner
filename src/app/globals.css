@@ -133,9 +133,7 @@ html{
 }
 
 .reservation-dark:hover::before,
-.reservation-dark:focus::before,
-.reservation-light:hover::before,
-.reservation-light:focus::before {
+.reservation-light:hover::before{
   transform: scale(2);
 }
 
@@ -152,9 +150,7 @@ html{
 }
 
 .hover-underline-dark:hover::after,
-.hover-underline-dark:focus::after,
-.hover-underline-light:hover::after,
-.hover-underline-light:focus::after {
+.hover-underline-light:hover::after{
   width: 100%;
   right: unset;
   left: 0;
@@ -287,9 +283,7 @@ html{
 }
 
 .image-overlay-dark:hover::before,
-.image-overlay-dark:focus::before,
-.image-overlay-light:hover::before,
-.image-overlay-light:focus::before {
+.image-overlay-light:hover::before{
   opacity: 0;
 }
 

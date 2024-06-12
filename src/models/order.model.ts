@@ -1,22 +1,34 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface orderSchemaInterface extends Document {
-  product: string;
+export interface orderItemInterface extends Document {
+  name: string;
   quantity: number;
   price: number;
-  total: number;
+}
+
+export interface orderSchemaInterface extends Document {
+  items: orderItemInterface[];
+  totalAmount: number;
+  customerName: string;
 }
 
 export const orderSchema: Schema<orderSchemaInterface> = new Schema(
   {
-    product: { type: String, required: [true, "Product name is required"] },
-    quantity: {
-      type: Number,
-      required: [true, "Quantity of product is required"],
-      default: 1,
+    customerName: {
+      type: String,
+      required: [true, "Customer Name is required"],
     },
-    price: { type: Number, required: [true, "price is required"] },
-    total: { type: Number, required: [true, "total is required"] },
+    totalAmount: { type: Number, required: [true, "total is required"] },
+    items: {
+      type: [
+        {
+          name: String,
+          quantity: Number,
+          price: Number,
+        },
+      ],
+      required: [true, "Order items are required"],
+    },
   },
   { timestamps: true }
 );

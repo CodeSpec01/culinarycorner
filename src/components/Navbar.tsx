@@ -192,9 +192,9 @@ const Navbar = () => {
                 className={clsx(
                   "p-2 rounded-md overflow-hidden relative cursor-pointer hover:border-transparent",
                   {
-                    "reservation-dark hover:text-black focus:text-black border-white border-2":
+                    "reservation-dark hover:text-black border-white border-2":
                       theme !== "light",
-                    "reservation-light hover:text-white focus:text-white border-black border-2":
+                    "reservation-light hover:text-white border-black border-2":
                       theme === "light",
                   }
                 )}
@@ -205,10 +205,10 @@ const Navbar = () => {
 
             <div
               className={clsx("border-[1px] rounded-full w-12 h-12", {
-                "focus:border-white hover:border-white": theme !== "light",
+                "hover:border-white": theme !== "light",
                 "border-transparent": userData.avatar,
                 "border-white": !userData.avatar && theme !== "light",
-                "focus:border-black hover:border-black": theme === "light",
+                "hover:border-black": theme === "light",
                 "border-black": !userData.avatar && theme === "light",
               })}
             >

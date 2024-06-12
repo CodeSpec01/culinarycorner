@@ -197,6 +197,103 @@ const time = [
   "22:00 PM",
   "22:30 PM",
   "23:00 PM",
-]
+];
 
-export { links, outlets, menus, chefLeft, chefRight, reviews, socials, time };
+const menuFilter = [
+  "all",
+  "breakfast",
+  "snacks",
+  "fast food",
+  "lunch",
+  "dinner",
+  "dessert",
+  "beverages",
+];
+
+const menuItems = [
+  {
+    name: "Cheesecake",
+    tags: ["dessert", "snacks"],
+    description: "Creamy cheesecake with a graham cracker crust.",
+    price: 300,
+    image: "/images/menu/food-1.png",
+  },
+  {
+    name: "Grilled Salmon",
+    tags: ["dinner"],
+    description: "Grilled salmon served with vegetables.",
+    price: 450,
+    image: "/images/menu/food-2.png",
+  },
+  {
+    name: "French Toast",
+    tags: ["breakfast", "dessert"],
+    description: "Golden brown French toast served with maple syrup.",
+    price: 160,
+    image: "/images/menu/food-3.png",
+  },
+  {
+    name: "Pasta Carbonara",
+    tags: ["dinner"],
+    description: "Creamy pasta with bacon and cheese.",
+    price: 350,
+    image: "/images/menu/food-4.png",
+  },
+  {
+    name: "Iced Coffee",
+    tags: ["beverages"],
+    description: "Chilled coffee with milk and ice.",
+    price: 150,
+    image: "/images/menu/food-5.png",
+  },
+  {
+    name: "Chicken Wrap",
+    tags: ["lunch", "fast food"],
+    description: "Grilled chicken wrapped in a tortilla.",
+    price: 250,
+    image: "/images/menu/food-6.png",
+  },
+  {
+    name: "Fruit Salad",
+    tags: ["snacks", "dessert"],
+    description: "Fresh fruit salad with honey dressing.",
+    price: 180,
+    image: "/images/menu/food-7.png",
+  },
+  {
+    name: "Margherita Pizza",
+    tags: ["dinner", "fast food"],
+    description: "Classic pizza with tomato sauce and mozzarella.",
+    price: 400,
+    image: "/images/menu/food-8.png",
+  },
+  {
+    name: "Green Smoothie",
+    tags: ["breakfast", "beverages"],
+    description: "Healthy smoothie with spinach and fruits.",
+    price: 220,
+    image: "/images/menu/food-9.png",
+  },
+  {
+    name: "Cheeseburger",
+    tags: ["fast food", "dinner"],
+    description: "Beef burger with cheese and pickles.",
+    price: 280,
+    image: "/images/menu/food-10.png",
+  },
+];
+
+
+
+export {
+  links,
+  outlets,
+  menus,
+  chefLeft,
+  chefRight,
+  reviews,
+  socials,
+  time,
+  menuFilter,
+  menuItems
+};

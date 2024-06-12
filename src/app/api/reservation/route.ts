@@ -11,10 +11,10 @@ export async function GET(request: NextRequest) {
     const attendees = Number(request.nextUrl.searchParams.get("attendees"));
     const email = request.nextUrl.searchParams.get("email");
 
-    if (!date) {
+    if (!date || !attendees || !email) {
       return NextResponse.json(
         {
-          message: "Date not found",
+          message: "Data not recieved",
           success: false,
         },
         { status: 400 }
@@ -52,10 +52,19 @@ export async function GET(request: NextRequest) {
 
     const user = await User.findOne({ email: email }).select("-password");
 
+    if (!user) {
+      return NextResponse.json(
+        {
+          message: "User not found with the provided email address",
+        },
+        { status: 404 }
+      );
+    }
+
     const OTP = Math.floor(100000 + Math.random() * 900000).toString();
 
     user!.verifyCode = OTP;
-    user!.verifyCodeExpiry = new Date(Date.now() + 60 * 60 * 1000);
+    user!.verifyCodeExpiry = new Date(Date.now() + 10 * 60 * 1000);
     await user!.save();
 
     await transporter.sendMail({
@@ -293,7 +302,7 @@ export async function GET(request: NextRequest) {
                 <tbody>
                   <tr>
                     <td>
-                      <p style="font-size: 14px; line-height: 24px; margin: 16px 0; text-align: center; color: #9ca3af; margin-bottom: 45px;">&copy 2024 Culinary Corner<br>NSUT Dwarka, Delhi 110078, IN</p>
+                      <p style="font-size: 14px; line-height: 24px; margin: 16px 0; text-align: center; color: #9ca3af; margin-bottom: 45px;">&copy; 2024 Culinary Corner<br>NSUT Dwarka, Delhi 110078, IN</p>
                     </td>
                   </tr>
                 </tbody>
@@ -332,7 +341,7 @@ export async function POST(request: NextRequest) {
     if (!email || !data) {
       return NextResponse.json(
         {
-          message: "Something went wrong, please try again",
+          message: "Data not recieved",
           success: false,
         },
         { status: 400 }
@@ -341,13 +350,24 @@ export async function POST(request: NextRequest) {
 
     dbConnect();
 
-    const user = await User.findOne({ email }).select("-password");
+    const user = await User.findOne({ verifyCode: data.otp }).select(
+      "-password"
+    );
 
     if (!user) {
       return NextResponse.json(
         {
-          message: "Something went wrong, please try again",
+          message: "Invalid OTP",
           success: false,
+        },
+        { status: 400 }
+      );
+    }
+
+    if (user.verifyCodeExpiry! < new Date()) {
+      return NextResponse.json(
+        {
+          message: "OTP expired",
         },
         { status: 400 }
       );
@@ -362,6 +382,7 @@ export async function POST(request: NextRequest) {
     await newReservation.save();
 
     user.reservations!.unshift(newReservation);
+    user.verifyCode = "";
 
     await user.save();
 
@@ -624,7 +645,7 @@ export async function POST(request: NextRequest) {
                         margin-bottom: 45px;
                       "
                     >
-                      &copy 2024 Culinary Corner<br />NSUT Dwarka, Delhi 110078,
+                      &copy; 2024 Culinary Corner<br />NSUT Dwarka, Delhi 110078,
                       IN
                     </p>
                   </td>

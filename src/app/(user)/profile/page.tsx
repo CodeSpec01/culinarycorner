@@ -69,7 +69,6 @@ const ProfilePage = () => {
     orders: [],
     reservations: [],
   });
-  const [dateFormat, setDateFormat] = useState("");
   const [editedUser, setEditedUser] = useState(user);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -557,13 +556,13 @@ const ProfilePage = () => {
             few clicks.
           </p>
         </div>
-        <div className="w-full py-[15vh] relative flex-center flex-col">
+        <div className="w-full py-[5vh] relative flex-center flex-col">
           <Image
             fill
             style={{ objectFit: "cover", objectPosition: "center" }}
-            src="/images/reservation-list.png"
+            src="/images/order-list.png"
             alt="bg"
-            className="absolute w-full h-full brightness-90"
+            className="absolute w-full h-full brightness-[0.6]"
           />
           <div className="w-[90%] flex-center relative">
             <OrderList user={user} theme={theme} />

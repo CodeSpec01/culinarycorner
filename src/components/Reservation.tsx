@@ -133,6 +133,7 @@ const Reservation = ({ theme }: { theme: string }) => {
         customerName: details.customerName,
         attendees: details.attendes,
         date: details.date.toLocaleString(),
+        otp: otp,
       }),
     });
 
@@ -340,17 +341,16 @@ const Reservation = ({ theme }: { theme: string }) => {
                               details.date.getDay() != 6 ? (
                                 <>
                                   {time.map((individualTime, index) => (
-                                    <>
+                                    <div key={index}>
                                       {index < 24 && (
                                         <SelectItem
                                           value={individualTime}
-                                          key={index}
                                           className=" w-full text-center"
                                         >
                                           {individualTime}
                                         </SelectItem>
                                       )}
-                                    </>
+                                    </div>
                                   ))}
                                 </>
                               ) : (

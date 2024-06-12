@@ -18,6 +18,7 @@ import { reservationSchemaInterface } from "../models/reservation.model";
 import { orderSchemaInterface } from "../models/order.model";
 import { Badge } from "@/src/components/ui/badge";
 import { Input } from "./ui/input";
+import { ScrollArea } from "./ui/scroll-area";
 
 interface UserInterface {
   username: string;
@@ -34,18 +35,19 @@ const OrderList = ({
 }: {
   user: UserInterface;
   theme?: string;
-}) => {
+  }) => {
+  
   return (
     <>
       {user?.orders && user?.orders.length > 0 ? (
         <>
           <Carousel className="w-[88%] sm:w-[80%]" opts={{ align: "center" }}>
             <CarouselContent>
-              {user?.reservations.map((reserve, index) => {
+              {user?.orders.map((order, index) => {
                 const creationDate = new Date(
-                  // @ts-ignore
-                  reserve.createdAt.toLocaleString()
-                ).toDateString();
+                  //@ts-ignore
+                  order.createdAt.toLocaleString()
+                )
 
                 return (
                   <CarouselItem
@@ -60,61 +62,27 @@ const OrderList = ({
                       >
                         <CardHeader>
                           <CardTitle className="flex items-center gap-[4%] flex-warp">
-                            Reservation
+                            Order
                             <Badge
                               className={`pointer-events-none ${
-                                reserve.status === "cancelled"
-                                  ? "bg-red-600"
+                                creationDate.getTime() + 24 * 60 * 60 * 1000 >
+                                Date.now()
+                                  ? "bg-yellow-600"
                                   : "bg-green-600"
                               }`}
                             >
-                              {reserve.status}
+                              {creationDate.getTime() + 24 * 60 * 60 * 1000 >
+                              Date.now()
+                                ? "Pending"
+                                : "Delivered"}
                             </Badge>
                           </CardTitle>
-                          <CardDescription>
-                            Reservation Details :
-                          </CardDescription>
+                          <CardDescription>Order Details :</CardDescription>
                         </CardHeader>
                         <CardContent className="">
                           <div className="grid w-full items-center gap-2">
                             <div className="text-md pointer-events-none">
-                              Date :
-                            </div>
-                            <Input
-                              className={`pointer-events-none bg-transparent ${
-                                theme === "dark"
-                                  ? "border-white"
-                                  : "border-black"
-                              }`}
-                              id="date"
-                              value={new Date(
-                                reserve.date
-                                  .split(",")[0]
-                                  .split("/")
-                                  .reverse()
-                                  .join("/")
-                              ).toDateString()}
-                            />
-                            <div className="flex items-center justify-center space-y-1.5"></div>
-                          </div>
-                          <div className="grid w-full items-center gap-2">
-                            <div className="text-md pointer-events-none">
-                              Time :
-                            </div>
-                            <Input
-                              className={`pointer-events-none bg-transparent ${
-                                theme === "dark"
-                                  ? "border-white"
-                                  : "border-black"
-                              }`}
-                              id="time"
-                              value={reserve.date.split(",")[1]}
-                            />
-                            <div className="flex items-center justify-center space-y-1.5"></div>
-                          </div>
-                          <div className="grid w-full items-center gap-2">
-                            <div className="text-md pointer-events-none">
-                              Attendees :
+                              Order under :
                             </div>
                             <Input
                               className={`pointer-events-none bg-transparent ${
@@ -123,13 +91,36 @@ const OrderList = ({
                                   : "border-black"
                               }`}
                               id="attendees"
-                              value={reserve.attendes}
+                              value={order.customerName}
                             />
                             <div className="flex items-center justify-center space-y-1.5"></div>
                           </div>
                           <div className="grid w-full items-center gap-2">
+                            <div className="text-md pointer-events-none w-full">
+                              Ordered Items :
+                            </div>
+                            <ScrollArea
+                              className={`bg-transparent text-wrap border rounded-lg w-full p-2 h-[150px] ${
+                                theme === "dark"
+                                  ? "border-white"
+                                  : "border-black"
+                              }`}
+                            >
+                              {/* {order.items.map(item => (item.name <br /> ))} */}
+                              {order.items.map((item) => (
+                                <p>
+                                  {item.name} : <br />
+                                  {item.quantity} x {item.price} - Rs.{" "}
+                                  {item.quantity * item.price} <br />
+                                  <br />
+                                </p>
+                              ))}
+                            </ScrollArea>
+                            <div className="flex items-center justify-center space-y-1.5"></div>
+                          </div>
+                          <div className="grid w-full items-center gap-2">
                             <div className="text-md pointer-events-none">
-                              Reservation under :
+                              Order Total :
                             </div>
                             <Input
                               className={`pointer-events-none bg-transparent ${
@@ -138,22 +129,39 @@ const OrderList = ({
                                   : "border-black"
                               }`}
                               id="name"
-                              value={reserve.customerName}
+                              value={order.totalAmount}
                             />
                             <div className="flex items-center justify-center space-y-1.5"></div>
                           </div>
                           <div className="grid w-full items-center gap-2">
                             <div className="text-md pointer-events-none">
-                              Creation Date :
+                              Order Date :
                             </div>
                             <Input
-                              className={`pointer-events-none bg-transparent ${
+                              className={`pointer-events-none bg-transparent overflow-scroll ${
                                 theme === "dark"
                                   ? "border-white"
                                   : "border-black"
                               }`}
-                              id="name"
-                              value={creationDate}
+                              id="date"
+                              value={creationDate.toDateString()}
+                            />
+                            <div className="flex items-center justify-center space-y-1.5"></div>
+                          </div>
+                          <div className="grid w-full items-center gap-2">
+                            <div className="text-md pointer-events-none">
+                              Delivery Date :
+                            </div>
+                            <Input
+                              className={`pointer-events-none bg-transparent overflow-scroll ${
+                                theme === "dark"
+                                  ? "border-white"
+                                  : "border-black"
+                              }`}
+                              id="date"
+                              value={
+                                new Date(creationDate.getTime() + 24 * 60 * 60 * 1000).toDateString()
+                              }
                             />
                             <div className="flex items-center justify-center space-y-1.5"></div>
                           </div>
