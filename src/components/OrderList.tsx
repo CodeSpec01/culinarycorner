@@ -107,8 +107,8 @@ const OrderList = ({
                               }`}
                             >
                               {/* {order.items.map(item => (item.name <br /> ))} */}
-                              {order.items.map((item) => (
-                                <p>
+                              {order.items.map((item, index) => (
+                                <p key={index}>
                                   {item.name} : <br />
                                   {item.quantity} x {item.price} - Rs.{" "}
                                   {item.quantity * item.price} <br />

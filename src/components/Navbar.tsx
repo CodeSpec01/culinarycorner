@@ -51,7 +51,7 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams().toString()
   const router = useRouter();
   const { toast } = useToast();
   const { theme } = useTheme();
@@ -92,11 +92,11 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    if (searchParams.toString()) {
+    if (searchParams) {
       window.history.replaceState({}, document.title, window.location.pathname);
       fetchData();
     }
-  }, [searchParams.toString()]);
+  }, [searchParams]);
 
   if (!mounted) {
     return;
